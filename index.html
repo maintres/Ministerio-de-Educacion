@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Educación</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .grid-item {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .grid-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .grid-item i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .grid-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .grid-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .modal-xl {
+            max-width: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="text-white mb-3">Sistema de Educación</h1>
+            <p class="text-white-50">Selecciona una opción del menú</p>
+        </div>
+        
+        <div class="grid-container">
+            <div class="grid-item" onclick="openModal('hs_catedra_crea.html')">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <h3>Horas Cátedra</h3>
+                <p>Crear horas cátedra</p>
+            </div>
+            
+            <div class="grid-item" onclick="redirectTo('hs_catedra_lista.html')">
+                <i class="fas fa-list"></i>
+                <h3>Lista Horas Cátedra</h3>
+                <p>Ver listado de horas cátedra</p>
+            </div>
+            
+            <div class="grid-item" onclick="redirectTo('profesores.html')">
+                <i class="fas fa-users"></i>
+                <h3>Profesores</h3>
+                <p>Ver listado de profesores</p>
+            </div>
+            
+            <div class="grid-item" onclick="redirectTo('reportes.html')">
+                <i class="fas fa-chart-bar"></i>
+                <h3>Reportes</h3>
+                <p>Generar reportes</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para cargar contenido externo -->
+    <div class="modal fade" id="contentModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crear Horas Cátedra</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <div class="text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="mt-2">Cargando contenido...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Funciones para el formulario de horas cátedra
+        function crearRegistro() {
+            alert('Iniciando proceso...');
+            
+            // Obtener valores de los campos
+            var dni = document.getElementById('dniInput');
+            var apellido = document.getElementById('apellidoInput');
+            var nombre = document.getElementById('nombreInput');
+            var numExp = document.getElementById('numExpInput');
+            var numDictamen = document.getElementById('numDictamenInput');
+            var fechaToma = document.getElementById('fechaTomaInput');
+            var escuela = document.getElementById('escuelaInput');
+            
+            // Verificar que los elementos existan
+            if (!dni || !apellido || !nombre || !numExp || !numDictamen || !fechaToma || !escuela) {
+                alert('Error: No se encontraron todos los campos del formulario');
+                return;
+            }
+            
+            // Obtener valores
+            var dniVal = dni.value;
+            var apellidoVal = apellido.value;
+            var nombreVal = nombre.value;
+            var numExpVal = numExp.value;
+            var numDictamenVal = numDictamen.value;
+            var fechaTomaVal = fechaToma.value;
+            var escuelaVal = escuela.value;
+            
+            // Verificar que todos los campos estén llenos
+            if (!dniVal || !apellidoVal || !nombreVal || !numExpVal || !numDictamenVal || !fechaTomaVal || !escuelaVal) {
+                alert('Por favor, completa todos los campos requeridos');
+                return;
+            }
+            
+            // Crear objeto con los datos
+            var datos = {
+                dni: dniVal,
+                apellido: apellidoVal,
+                nombre: nombreVal,
+                num_exp: numExpVal,
+                num_dictamen: numDictamenVal,
+                fecha_toma: fechaTomaVal,
+                escuela: escuelaVal
+            };
+            
+            alert('Datos capturados: ' + JSON.stringify(datos));
+            
+            // Guardar en localStorage
+            try {
+                localStorage.setItem('datosProfesor', JSON.stringify(datos));
+                alert('Datos guardados exitosamente. Redirigiendo...');
+                
+                // Cerrar modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('contentModal'));
+                if (modal) {
+                    modal.hide();
+                }
+                
+                // Redirigir a la página de lista
+                window.location.href = 'hs_catedra_lista.html';
+            } catch (error) {
+                alert('Error al guardar los datos: ' + error.message);
+            }
+        }
+        
+        function validarDNI(input) {
+            var dni = input.value.replace(/\D/g, '');
+            if (dni.length > 8) {
+                input.value = dni.substring(0, 8);
+            }
+        }
+        
+        function cargarDatos() {
+            try {
+                // Intentar obtener datos de URL parameters
+                var urlParams = new URLSearchParams(window.location.search);
+                var dni = urlParams.get('dni');
+                
+                if (dni) {
+                    // Cargar datos de la URL
+                    var dniInput = document.getElementById('dniInput');
+                    var apellidoInput = document.getElementById('apellidoInput');
+                    var nombreInput = document.getElementById('nombreInput');
+                    var numExpInput = document.getElementById('numExpInput');
+                    var numDictamenInput = document.getElementById('numDictamenInput');
+                    var fechaTomaInput = document.getElementById('fechaTomaInput');
+                    var escuelaInput = document.getElementById('escuelaInput');
+                    
+                    if (dniInput) dniInput.value = dni;
+                    if (apellidoInput) apellidoInput.value = urlParams.get('apellido') || '';
+                    if (nombreInput) nombreInput.value = urlParams.get('nombre') || '';
+                    if (numExpInput) numExpInput.value = urlParams.get('num_exp') || '';
+                    if (numDictamenInput) numDictamenInput.value = urlParams.get('num_dictamen') || '';
+                    if (fechaTomaInput) fechaTomaInput.value = urlParams.get('fecha_toma') || '';
+                    if (escuelaInput) escuelaInput.value = urlParams.get('escuela') || '';
+                } else {
+                    // Intentar cargar datos del localStorage
+                    var datosGuardados = localStorage.getItem('datosProfesor');
+                    if (datosGuardados) {
+                        var datos = JSON.parse(datosGuardados);
+                        var dniInput = document.getElementById('dniInput');
+                        var apellidoInput = document.getElementById('apellidoInput');
+                        var nombreInput = document.getElementById('nombreInput');
+                        var numExpInput = document.getElementById('numExpInput');
+                        var numDictamenInput = document.getElementById('numDictamenInput');
+                        var fechaTomaInput = document.getElementById('fechaTomaInput');
+                        var escuelaInput = document.getElementById('escuelaInput');
+                        
+                        if (dniInput) dniInput.value = datos.dni || '';
+                        if (apellidoInput) apellidoInput.value = datos.apellido || '';
+                        if (nombreInput) nombreInput.value = datos.nombre || '';
+                        if (numExpInput) numExpInput.value = datos.num_exp || '';
+                        if (numDictamenInput) numDictamenInput.value = datos.num_dictamen || '';
+                        if (fechaTomaInput) fechaTomaInput.value = datos.fecha_toma || '';
+                        if (escuelaInput) escuelaInput.value = datos.escuela || '';
+                    }
+                }
+            } catch (error) {
+                console.error('Error al cargar datos:', error);
+            }
+        }
+        
+        function inicializarFormulario() {
+            alert('Formulario inicializado correctamente');
+            
+            // Agregar evento para validar DNI
+            var dniInput = document.getElementById('dniInput');
+            if (dniInput) {
+                dniInput.addEventListener('input', function() {
+                    validarDNI(this);
+                });
+            }
+            
+            // Cargar datos existentes
+            cargarDatos();
+        }
+
+        function openModal(page) {
+            const modal = new bootstrap.Modal(document.getElementById('contentModal'));
+            const modalContent = document.getElementById('modalContent');
+            
+            // Mostrar spinner de carga
+            modalContent.innerHTML = `
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                    <p class="mt-2">Cargando contenido...</p>
+                </div>
+            `;
+            
+            modal.show();
+            
+            // Cargar contenido del archivo
+            fetch(page)
+                .then(response => response.text())
+                .then(html => {
+                    // Extraer solo el contenido del body
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const bodyContent = doc.body.innerHTML;
+                    
+                    modalContent.innerHTML = bodyContent;
+                    
+                    // Inicializar el formulario después de cargar el contenido
+                    setTimeout(inicializarFormulario, 100);
+                    
+                    // Enfocar el primer input si existe
+                    const firstInput = modalContent.querySelector('input');
+                    if (firstInput) {
+                        firstInput.focus();
+                    }
+                })
+                .catch(error => {
+                    modalContent.innerHTML = `
+                        <div class="alert alert-danger">
+                            <h5>Error al cargar el contenido</h5>
+                            <p>No se pudo cargar el archivo: ${page}</p>
+                            <p>Error: ${error.message}</p>
+                        </div>
+                    `;
+                });
+        }
+
+        function redirectTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>

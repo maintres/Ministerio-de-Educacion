@@ -1,28 +1,3 @@
-<?php require 'conn/connection.php';
-
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-        $query = "SELECT 
-                hs_catedras.*, 
-                profesor.*,
-                tipo_tabla.*
-            FROM 
-                hs_catedras
-            INNER JOIN profesor ON hs_catedras.id_profe = profesor.id_profe
-            INNER JOIN tipo_tabla ON hs_catedras.tipo = tipo_tabla.id_tipo
-            WHERE hs_catedras.id_profe = :id
-        ";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $profe = $stmt->fetch(PDO::FETCH_ASSOC);        
-} else {
-    die('El parámetro ID no está definido.');
-}
-$fecha = new DateTime($profe['fecha_toma']);
-$fecha_formateada = $fecha->format('d/m/Y');
-?>
-
 <html style="background: #666666;" lang="es">
 <head>
     <meta charset="UTF-8">
@@ -126,28 +101,11 @@ $fecha_formateada = $fecha->format('d/m/Y');
     </style>
 </head>
 
-<?php $anio_actual = date('Y'); ?>
-<?php $mes_actual = date('m'); 
-$mes = '';
-if ($mes_actual === 1) { $mes = 'ENERO';}
-elseif ($mes_actual == 2) {$mes = 'FEBRERO';}
-elseif ($mes_actual == 3) {$mes = 'MARZO';}
-elseif ($mes_actual == 4) {$mes = 'ABRIL';}
-elseif ($mes_actual == 5) {$mes = 'MAYO';}
-elseif ($mes_actual == 6) {$mes = 'JUNIO';}
-elseif ($mes_actual == 7) {$mes = 'JULIO';}
-elseif ($mes_actual == 8) {$mes = 'AGOSTO';}
-elseif ($mes_actual == 9) {$mes = 'SEPTIEMBRE';}
-elseif ($mes_actual == 10) {$mes = 'OCTUBRE';}
-elseif ($mes_actual == 11) {$mes = 'NOVIEMBRE';}
-elseif ($mes_actual == 12) {$mes = 'DICIEMBRE';}
-?>
-
 <body class="content">    
     <div class="encabezado">
-        <p><strong>Corresponde a Exp.</strong> N° 300-<span><?php echo htmlspecialchars($profe['num_exp']);?></span>-<?php echo $anio_actual;?></strong>-EXP.</p>
+        <p><strong>Corresponde a Exp.</strong> N° 300-<span id="num_exp"></span>-<span id="anio_actual"></span>-EXP.</p>
         <p><strong>Extracto:</strong> S/Designación Hs.CÁTEDRA.</p>
-        <p style="margin-top: 10px; margin-right: 80px;font-size: 17px;"><strong>DICTAMEN N° <span><?php echo htmlspecialchars($profe['num_dictamen']); ?></span>/<?php echo $anio_actual;?></strong></p>
+        <p style="margin-top: 10px; margin-right: 80px;font-size: 17px;"><strong>DICTAMEN N° <span id="num_dictamen"></span>/<span id="anio_actual2"></span></strong></p>
     </div>       
     <div style="text-align: center;display: inline-block; margin-bottom: 0px;" >
         MINISTERIO DE EDUCACIÓN
@@ -158,11 +116,11 @@ elseif ($mes_actual == 12) {$mes = 'DICIEMBRE';}
     <div class="">
         <p>
             Vienen a consideración de este Servicio Jurídico las presentes actuaciones mediante las cuales tramita la 
-            designación de el/la Sr/Sra. <span><?php echo htmlspecialchars($profe['apellido']); ?></span> <span><?php echo htmlspecialchars($profe['nombre']); ?></span>
-             D.N.I. N° <span><?php echo htmlspecialchars($profe['dni']); ?></span>, en la situación de revista consignada en la solicitud obrante a fs. 01.
+            designación de el/la Sr/Sra. <span id="apellido"></span> <span id="nombre"></span>
+            D.N.I. N° <span id="dni"></span>, en la situación de revista consignada en la solicitud obrante a fs. 01.
         </p>
         <p>
-            Que la designación surge del acto de ofrecimiento, efectuado por <span><?php echo htmlspecialchars($profe['escuela']); ?></span>.
+            Que la designación surge del acto de ofrecimiento, efectuado por <span id="escuela"></span>.
         </p>
         <p>
             Se observa que ha tomado debida intervención Interinatos y Suplencias certificando que 
@@ -175,13 +133,13 @@ elseif ($mes_actual == 12) {$mes = 'DICIEMBRE';}
             en conformidad con la Ley N° 1116-A, Art. 23 y Resoluciones N° 12401-ME-2016, N° 2550-ME-2023, debiendo darse intervención 
             a Departamento Contable a los fines presupuestarios, luego la Dirección del Área deberá emitir la pertinente Disposición por 
             medio de la cual se designa a el/la Sr/Sra.
-            <span><?php echo htmlspecialchars($profe['apellido']); ?></span> <span><?php echo htmlspecialchars($profe['nombre']); ?></span> 
-            desde el <span><?php echo htmlspecialchars($fecha_formateada); ?></span>, que en relación a ello, la Asesoría Letrada de 
+            <span id="apellido2"></span> <span id="nombre2"></span> 
+            desde el <span id="fecha_formateada"></span>, que en relación a ello, la Asesoría Letrada de 
             Gobierno de la Provincia, se expidió en respuesta a la consulta efectuada por este Ministerio de Educación en 
             Expediente N° 300-004752-2023, a través del Dictamen N° 146, el que en su parte pertinente reza" 
             (...) la Disposición que prescribe la cobertura de cargos con fecha que se retrotrae al momento de la toma de posesión reúne 
             las condiciones y produce los efectos que en los referidos Artículos tiene legislada la Ley de Procedimiento Administrativo, 
-            sin perjuicio a que, con posterioridad sea ratificado en los términos de la Ley N° 1116-A.”
+            sin perjuicio a que, con posterioridad sea ratificado en los términos de la Ley N° 1116-A."
         </p>
         <p>
             Es cuanto dictamina. Sirva la presente de atenta nota.-
@@ -190,15 +148,104 @@ elseif ($mes_actual == 12) {$mes = 'DICIEMBRE';}
             Asesoría Letrada del Ministerio de Educación<br>            
         </p>
         <p>
-            San Juan, <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> de <?php echo $mes;?> de <?php echo $anio_actual;?>.
+            San Juan, <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> de <span id="mes_actual"></span> de <span id="anio_actual3"></span>.
         </p>
     </div>
     <div class="button-container" >
         <button onclick="window.print()">Imprimir Documento</button>
         <div class="enlaces">
-            <a style="background-color:rgb(100, 106, 100);" href="index.php">Atrás</a>
-            <a style="background-color:#ffc107; color:#000;" href="hs_catedra_edit.php?id=<?php echo $profe['id_profe']; ?>">Editar</a>
+            <a style="background-color:rgb(100, 106, 100);" href="index.html">Atrás</a>
+            <a style="background-color:#ffc107; color:#000;" href="hs_catedra_crea.html">Editar</a>
         </div>
     </div>  
+
+    <script>
+        // Función para obtener el mes en español
+        function obtenerMes(mes) {
+            const meses = {
+                '01': 'ENERO',
+                '02': 'FEBRERO',
+                '03': 'MARZO',
+                '04': 'ABRIL',
+                '05': 'MAYO',
+                '06': 'JUNIO',
+                '07': 'JULIO',
+                '08': 'AGOSTO',
+                '09': 'SEPTIEMBRE',
+                '10': 'OCTUBRE',
+                '11': 'NOVIEMBRE',
+                '12': 'DICIEMBRE'
+            };
+            return meses[mes] || '';
+        }
+
+        // Función para formatear fecha
+        function formatearFecha(fechaString) {
+            if (!fechaString) return '_____';
+            
+            const fecha = new Date(fechaString);
+            const dia = fecha.getDate().toString().padStart(2, '0');
+            const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+            const anio = fecha.getFullYear();
+            
+            return `${dia}/${mes}/${anio}`;
+        }
+
+        // Función para obtener datos del localStorage o URL parameters
+        function obtenerDatosProfesor() {
+            // Intentar obtener datos del localStorage primero
+            const datosGuardados = localStorage.getItem('datosProfesor');
+            if (datosGuardados) {
+                return JSON.parse(datosGuardados);
+            }
+
+            // Si no hay datos en localStorage, intentar obtener de URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const datos = {
+                dni: urlParams.get('dni') || '',
+                apellido: urlParams.get('apellido') || '',
+                nombre: urlParams.get('nombre') || '',
+                num_exp: urlParams.get('num_exp') || '',
+                num_dictamen: urlParams.get('num_dictamen') || '',
+                fecha_toma: urlParams.get('fecha_toma') || '',
+                escuela: urlParams.get('escuela') || ''
+            };
+            return datos;
+        }
+
+        // Función para llenar el documento con los datos
+        function llenarDocumento() {
+            const datos = obtenerDatosProfesor();
+            const fecha = new Date();
+            const anio = fecha.getFullYear();
+            const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+            const mesNombre = obtenerMes(mes);
+
+            // Llenar los campos del documento
+            document.getElementById('num_exp').textContent = datos.num_exp || '_____';
+            document.getElementById('anio_actual').textContent = anio;
+            document.getElementById('anio_actual2').textContent = anio;
+            document.getElementById('anio_actual3').textContent = anio;
+            document.getElementById('num_dictamen').textContent = datos.num_dictamen || '_____';
+            document.getElementById('apellido').textContent = datos.apellido || '_____';
+            document.getElementById('apellido2').textContent = datos.apellido || '_____';
+            document.getElementById('nombre').textContent = datos.nombre || '_____';
+            document.getElementById('nombre2').textContent = datos.nombre || '_____';
+            document.getElementById('dni').textContent = datos.dni || '_____';
+            document.getElementById('escuela').textContent = datos.escuela || '_____';
+            document.getElementById('fecha_formateada').textContent = formatearFecha(datos.fecha_toma);
+            document.getElementById('mes_actual').textContent = mesNombre;
+        }
+
+        // Ejecutar cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            llenarDocumento();
+        });
+
+        // Función para guardar datos en localStorage (se puede llamar desde el formulario de creación)
+        function guardarDatosProfesor(datos) {
+            localStorage.setItem('datosProfesor', JSON.stringify(datos));
+        }
+    </script>
 </body>
 </html>
