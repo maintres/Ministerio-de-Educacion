@@ -6,28 +6,45 @@
     <title>Sistema de Educación</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/LOGO.png" />
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #0f0f0f;
+            color: #ffffff;
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
             min-height: 100vh;
             padding: 20px;
         }
         
+        .text-center h1 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .text-center p {
+            font-size: 1rem;
+            color: #aaaaaa;
+            font-weight: 300;
+        }
+        
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 30px 0;
         }
         
         .grid-item {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
+            background-color: #212121;
+            border: 1px solid #303030;
+            border-radius: 12px;
+            padding: 30px 25px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
             aspect-ratio: 1;
             display: flex;
@@ -37,54 +54,164 @@
         }
         
         .grid-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            background-color: #303030;
+            border-color: #404040;
+            transform: translateY(-2px);
         }
         
         .grid-item i {
             font-size: 3rem;
             margin-bottom: 15px;
-            color: #667eea;
+            color: #007bff;
         }
         
         .grid-item h3 {
-            color: #333;
+            color: #ffffff;
             margin-bottom: 10px;
             font-size: 1.2rem;
+            font-weight: 500;
         }
         
         .grid-item p {
-            color: #666;
+            color: #aaaaaa;
             font-size: 0.9rem;
+            font-weight: 300;
         }
         
         .modal-content {
-            border-radius: 15px;
-            border: none;
+            background-color: #212121;
+            border: 1px solid #303030;
+            border-radius: 12px;
+            color: #ffffff;
         }
         
         .modal-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 15px 15px 0 0;
+            background-color: #212121;
+            border-bottom: 1px solid #303030;
+            border-radius: 12px 12px 0 0;
+            padding: 20px 25px;
+        }
+        
+        .modal-header h5 {
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .modal-body {
+            background-color: #212121;
+            color: #ffffff;
+            padding: 25px;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #007bff;
             border: none;
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
         }
         
         .btn-primary:hover {
-            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            background-color: #0056b3;
+            color: #ffffff;
+        }
+        
+        .btn-secondary {
+            background-color: #303030;
+            border: 1px solid #404040;
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #404040;
+            color: #ffffff;
+        }
+        
+        .form-control {
+            background-color: #303030;
+            border: 1px solid #404040;
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 12px 16px;
         }
         
         .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            background-color: #303030;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+            color: #ffffff;
+        }
+        
+        .form-control::placeholder {
+            color: #888888;
+        }
+        
+        .form-label {
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .card {
+            background-color: #212121;
+            border: 1px solid #303030;
+            border-radius: 12px;
+        }
+        
+        .card-header {
+            background-color: #212121;
+            border-bottom: 1px solid #303030;
+            border-radius: 12px 12px 0 0;
+            padding: 20px 25px;
+        }
+        
+        .card-header h4 {
+            color: #ffffff;
+            font-weight: 500;
+            margin: 0;
+        }
+        
+        .card-body {
+            background-color: #212121;
+            border-radius: 0 0 12px 12px;
+            padding: 25px;
         }
         
         .modal-xl {
             max-width: 90%;
+        }
+        
+        .spinner-border {
+            color: #007bff;
+        }
+        
+        .alert-danger {
+            background-color: #3d1a1a;
+            border: 1px solid #5a2a2a;
+            color: #ff6b6b;
+            border-radius: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .text-center h1 {
+                font-size: 2rem;
+            }
+            
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .grid-item {
+                padding: 25px 20px;
+            }
         }
     </style>
 </head>
@@ -102,19 +229,19 @@
                 <p>Crear horas cátedra</p>
             </div>
             
-            <div class="grid-item" onclick="redirectTo('hs_catedra_lista.html')">
+            <div class="grid-item" onclick="redirectTo('')">
                 <i class="fas fa-list"></i>
                 <h3>Lista Horas Cátedra</h3>
                 <p>Ver listado de horas cátedra</p>
             </div>
             
-            <div class="grid-item" onclick="redirectTo('profesores.html')">
+            <div class="grid-item" onclick="redirectTo('')">
                 <i class="fas fa-users"></i>
                 <h3>Profesores</h3>
                 <p>Ver listado de profesores</p>
             </div>
             
-            <div class="grid-item" onclick="redirectTo('reportes.html')">
+            <div class="grid-item" onclick="redirectTo('')">
                 <i class="fas fa-chart-bar"></i>
                 <h3>Reportes</h3>
                 <p>Generar reportes</p>
@@ -146,7 +273,6 @@
     <script>
         // Funciones para el formulario de horas cátedra
         function crearRegistro() {
-            alert('Iniciando proceso...');
             
             // Obtener valores de los campos
             var dni = document.getElementById('dniInput');
@@ -189,24 +315,25 @@
                 escuela: escuelaVal
             };
             
-            alert('Datos capturados: ' + JSON.stringify(datos));
+            //alert('Datos capturados: ' + JSON.stringify(datos));
             
-            // Guardar en localStorage
-            try {
-                localStorage.setItem('datosProfesor', JSON.stringify(datos));
-                alert('Datos guardados exitosamente. Redirigiendo...');
-                
-                // Cerrar modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('contentModal'));
-                if (modal) {
-                    modal.hide();
-                }
-                
-                // Redirigir a la página de lista
-                window.location.href = 'hs_catedra_lista.html';
-            } catch (error) {
-                alert('Error al guardar los datos: ' + error.message);
+            // Cerrar modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('contentModal'));
+            if (modal) {
+                modal.hide();
             }
+            
+            // Enviar datos directamente a la página de lista usando URL parameters
+            var url = 'hs_catedra_lista.html?' + 
+                     'dni=' + encodeURIComponent(dniVal) +
+                     '&apellido=' + encodeURIComponent(apellidoVal) +
+                     '&nombre=' + encodeURIComponent(nombreVal) +
+                     '&num_exp=' + encodeURIComponent(numExpVal) +
+                     '&num_dictamen=' + encodeURIComponent(numDictamenVal) +
+                     '&fecha_toma=' + encodeURIComponent(fechaTomaVal) +
+                     '&escuela=' + encodeURIComponent(escuelaVal);
+            
+            window.location.href = url;
         }
         
         function validarDNI(input) {
@@ -218,7 +345,7 @@
         
         function cargarDatos() {
             try {
-                // Intentar obtener datos de URL parameters
+                // Solo cargar datos de URL parameters
                 var urlParams = new URLSearchParams(window.location.search);
                 var dni = urlParams.get('dni');
                 
@@ -239,36 +366,14 @@
                     if (numDictamenInput) numDictamenInput.value = urlParams.get('num_dictamen') || '';
                     if (fechaTomaInput) fechaTomaInput.value = urlParams.get('fecha_toma') || '';
                     if (escuelaInput) escuelaInput.value = urlParams.get('escuela') || '';
-                } else {
-                    // Intentar cargar datos del localStorage
-                    var datosGuardados = localStorage.getItem('datosProfesor');
-                    if (datosGuardados) {
-                        var datos = JSON.parse(datosGuardados);
-                        var dniInput = document.getElementById('dniInput');
-                        var apellidoInput = document.getElementById('apellidoInput');
-                        var nombreInput = document.getElementById('nombreInput');
-                        var numExpInput = document.getElementById('numExpInput');
-                        var numDictamenInput = document.getElementById('numDictamenInput');
-                        var fechaTomaInput = document.getElementById('fechaTomaInput');
-                        var escuelaInput = document.getElementById('escuelaInput');
-                        
-                        if (dniInput) dniInput.value = datos.dni || '';
-                        if (apellidoInput) apellidoInput.value = datos.apellido || '';
-                        if (nombreInput) nombreInput.value = datos.nombre || '';
-                        if (numExpInput) numExpInput.value = datos.num_exp || '';
-                        if (numDictamenInput) numDictamenInput.value = datos.num_dictamen || '';
-                        if (fechaTomaInput) fechaTomaInput.value = datos.fecha_toma || '';
-                        if (escuelaInput) escuelaInput.value = datos.escuela || '';
-                    }
                 }
+                // No cargar datos del localStorage
             } catch (error) {
                 console.error('Error al cargar datos:', error);
             }
         }
         
-        function inicializarFormulario() {
-            alert('Formulario inicializado correctamente');
-            
+        function inicializarFormulario() {            
             // Agregar evento para validar DNI
             var dniInput = document.getElementById('dniInput');
             if (dniInput) {

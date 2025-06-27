@@ -193,13 +193,7 @@
 
         // Función para obtener datos del localStorage o URL parameters
         function obtenerDatosProfesor() {
-            // Intentar obtener datos del localStorage primero
-            const datosGuardados = localStorage.getItem('datosProfesor');
-            if (datosGuardados) {
-                return JSON.parse(datosGuardados);
-            }
-
-            // Si no hay datos en localStorage, intentar obtener de URL parameters
+            // Solo obtener datos de URL parameters
             const urlParams = new URLSearchParams(window.location.search);
             const datos = {
                 dni: urlParams.get('dni') || '',
