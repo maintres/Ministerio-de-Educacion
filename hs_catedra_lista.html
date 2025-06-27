@@ -160,6 +160,12 @@
     </div>  
 
     <script>
+        // Función para convertir texto a mayúsculas
+        function convertirAMayusculas(texto) {
+            if (!texto || texto === '_____') return '_____';
+            return texto.toUpperCase();
+        }
+
         // Función para obtener el mes en español
         function obtenerMes(mes) {
             const meses = {
@@ -183,6 +189,16 @@
         function formatearFecha(fechaString) {
             if (!fechaString) return '_____';
             
+            // Si la fecha viene en formato YYYY-MM-DD, extraer directamente
+            if (fechaString.includes('-')) {
+                const partes = fechaString.split('-');
+                const anio = partes[0];
+                const mes = partes[1];
+                const dia = partes[2];
+                return `${dia}/${mes}/${anio}`;
+            }
+            
+            // Si viene en otro formato, usar Date
             const fecha = new Date(fechaString);
             const dia = fecha.getDate().toString().padStart(2, '0');
             const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
@@ -215,18 +231,18 @@
             const mes = String(fecha.getMonth() + 1).padStart(2, '0');
             const mesNombre = obtenerMes(mes);
 
-            // Llenar los campos del documento
+            // Llenar los campos del documento con mayúsculas
             document.getElementById('num_exp').textContent = datos.num_exp || '_____';
             document.getElementById('anio_actual').textContent = anio;
             document.getElementById('anio_actual2').textContent = anio;
             document.getElementById('anio_actual3').textContent = anio;
             document.getElementById('num_dictamen').textContent = datos.num_dictamen || '_____';
-            document.getElementById('apellido').textContent = datos.apellido || '_____';
-            document.getElementById('apellido2').textContent = datos.apellido || '_____';
-            document.getElementById('nombre').textContent = datos.nombre || '_____';
-            document.getElementById('nombre2').textContent = datos.nombre || '_____';
+            document.getElementById('apellido').textContent = convertirAMayusculas(datos.apellido);
+            document.getElementById('apellido2').textContent = convertirAMayusculas(datos.apellido);
+            document.getElementById('nombre').textContent = convertirAMayusculas(datos.nombre);
+            document.getElementById('nombre2').textContent = convertirAMayusculas(datos.nombre);
             document.getElementById('dni').textContent = datos.dni || '_____';
-            document.getElementById('escuela').textContent = datos.escuela || '_____';
+            document.getElementById('escuela').textContent = convertirAMayusculas(datos.escuela);
             document.getElementById('fecha_formateada').textContent = formatearFecha(datos.fecha_toma);
             document.getElementById('mes_actual').textContent = mesNombre;
         }

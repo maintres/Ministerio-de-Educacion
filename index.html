@@ -231,19 +231,19 @@
             
             <div class="grid-item" onclick="redirectTo('')">
                 <i class="fas fa-list"></i>
-                <h3>Lista Horas Cátedra</h3>
+                <h3>PROXIMAMENTE</h3>
                 <p>Ver listado de horas cátedra</p>
             </div>
             
             <div class="grid-item" onclick="redirectTo('')">
                 <i class="fas fa-users"></i>
-                <h3>Profesores</h3>
+                <h3>PROXIMAMENTE</h3>
                 <p>Ver listado de profesores</p>
             </div>
             
             <div class="grid-item" onclick="redirectTo('')">
                 <i class="fas fa-chart-bar"></i>
-                <h3>Reportes</h3>
+                <h3>PROXIMAMENTE</h3>
                 <p>Generar reportes</p>
             </div>
         </div>
@@ -374,6 +374,9 @@
         }
         
         function inicializarFormulario() {            
+            // Establecer fecha de hoy
+            ponerFechaHoy();
+            
             // Agregar evento para validar DNI
             var dniInput = document.getElementById('dniInput');
             if (dniInput) {
@@ -384,6 +387,30 @@
             
             // Cargar datos existentes
             cargarDatos();
+        }
+        
+        // Función para establecer la fecha de hoy
+        function ponerFechaHoy() {
+            // Usar toLocaleDateString para obtener la fecha local correcta
+            var hoy = new Date();
+            var fechaLocal = hoy.toLocaleDateString('es-AR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+            
+            // Convertir formato DD/MM/YYYY a YYYY-MM-DD
+            var partes = fechaLocal.split('/');
+            var fechaFormateada = partes[2] + '-' + partes[1] + '-' + partes[0];
+            
+            // Verificar que la fecha sea correcta
+            console.log('Fecha del sistema:', hoy.toLocaleDateString());
+            console.log('Fecha formateada:', fechaFormateada);
+            
+            var fechaInput = document.getElementById('fechaTomaInput');
+            if (fechaInput) {
+                fechaInput.value = fechaFormateada;
+            }
         }
 
         function openModal(page) {

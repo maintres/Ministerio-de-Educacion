@@ -141,61 +141,53 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">Crear Registro de Horas Cátedra</h4>
+                <form id="formProfesor">
+                    <!-- Profesor Information -->
+                    <h5 class="mb-3">Información del Profesor</h5>
+                    <div class="row mb-3">                                
+                        <div class="col-md-4">
+                            <label class="form-label" for="dniInput">DNI</label>
+                            <input type="text" name="dni" class="form-control"
+                                id="dniInput"
+                                value=""
+                                pattern="[0-9]{8}" title="Ingresa exactamente 8 dígitos numéricos" required>                                
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="apellidoInput">Apellido/s</label>
+                            <input type="text" name="apellido" class="form-control" id="apellidoInput" value="" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="nombreInput">Nombre/s</label>
+                            <input type="text" name="nombre" class="form-control" id="nombreInput" value="" required>
+                        </div>                            
+                    </div>                            
+                    <!-- Cátedra Information -->
+                    <!--<h5 class="mb-3 mt-4">Información de la Cátedra</h5>-->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="numExpInput">Número de Expediente</label>
+                            <input type="text" name="num_exp" class="form-control" id="numExpInput" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="numDictamenInput">Número de Dictamen</label>
+                            <input type="text" name="num_dictamen" class="form-control" id="numDictamenInput" required>
+                        </div>                                
                     </div>
-                    <div class="card-body">
-                        <form id="formProfesor">
-                            <!-- Profesor Information -->
-                            <h5 class="mb-3">Información del Profesor</h5>
-                            <div class="row mb-3">                                
-                                <div class="col-md-4">
-                                    <label class="form-label" for="dniInput">DNI</label>
-                                    <input type="text" name="dni" class="form-control"
-                                        id="dniInput"
-                                        value=""
-                                        pattern="[0-9]{8}" title="Ingresa exactamente 8 dígitos numéricos" required>                                
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label class="form-label" for="apellidoInput">Apellido/s</label>
-                                    <input type="text" name="apellido" class="form-control" id="apellidoInput" value="" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label" for="nombreInput">Nombre/s</label>
-                                    <input type="text" name="nombre" class="form-control" id="nombreInput" value="" required>
-                                </div>                            
-                            </div>                            
-                            <!-- Cátedra Information -->
-                            <h5 class="mb-3 mt-4">Información de la Cátedra</h5>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label" for="numExpInput">Número de Expediente</label>
-                                    <input type="text" name="num_exp" class="form-control" id="numExpInput" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label" for="numDictamenInput">Número de Dictamen</label>
-                                    <input type="text" name="num_dictamen" class="form-control" id="numDictamenInput" required>
-                                </div>                                
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label class="form-label" for="fechaTomaInput">Fecha de toma de posesión</label>
-                                    <input type="date" name="fecha_toma" class="form-control" id="fechaTomaInput" placeholder="DD/MM/YYYY" required>
-                                </div>                               
-                                <div class="col-md-8">
-                                    <label class="form-label" for="escuelaInput">Escuela</label>
-                                    <input type="text" name="escuela" class="form-control" id="escuelaInput" required>
-                                </div>                                
-                            </div>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-primary" onclick="crearRegistro()">Crear</button>
-                                <a class="btn btn-secondary" href="index.html">Cancelar</a>
-                            </div>
-                        </form>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label" for="fechaTomaInput">Fecha de toma de posesión</label>
+                            <input type="date" name="fecha_toma" class="form-control" id="fechaTomaInput" required>
+                        </div>                               
+                        <div class="col-md-8">
+                            <label class="form-label" for="escuelaInput">Escuela</label>
+                            <input type="text" name="escuela" class="form-control" id="escuelaInput" required>
+                        </div>                                
                     </div>
-                </div>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-primary" onclick="crearRegistro()">Crear</button>
+                        <a class="btn btn-secondary" href="index.html">Cancelar</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
