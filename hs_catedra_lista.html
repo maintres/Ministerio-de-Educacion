@@ -38,7 +38,8 @@
         .encabezado {
             text-align: right;
             font-size: 0.9em;
-            margin-bottom: 20px;            
+            margin-bottom: 20px;   
+            font-family: 'Times New Roman', Times, serif;
         }
         .content {
             text-align: justify;
@@ -104,16 +105,22 @@
 <body class="content">    
     <div class="encabezado">
         <p><strong>Corresponde a Exp.</strong> N° 300-<span id="num_exp"></span>-<span id="anio_actual"></span>-EXP.</p>
-        <p><strong>Extracto:</strong> S/Designación Hs.CÁTEDRA.</p>
+        <p><strong>Extracto:</strong> S/Designación en Hs.CÁTEDRA.</p>
         <p style="margin-top: 10px; margin-right: 80px;font-size: 17px;"><strong>DICTAMEN N° <span id="num_dictamen"></span>/<span id="anio_actual2"></span></strong></p>
     </div>       
-    <div style="text-align: center;display: inline-block; margin-bottom: 0px;" >
-        MINISTERIO DE EDUCACIÓN
-        <br><u>SAN JUAN</u>
+    <br>
+    <br>
+    <br>
+        
+    <div style="text-align: center;display: inline-block; margin-bottom: 0px;font-family: Cambria;font-size: 20px;" >
+        <strong>MINISTERIO DE EDUCACIÓN</strong>        
     </div>
-    <h3 style="margin-top: 0px; padding-top: 0px; margin-bottom: 0px;"><strong>DIVISIÓN PERSONAL DOCENTE</strong></h3>
-    <h5>S.__________ / __________D</h5>
-    <div class="">
+    <br>
+    <u style="font-family: Times New Roman; padding-left: 60px; ">SAN JUAN</u>
+    <h4 style="margin-top: 0px; padding-top: 0px; margin-bottom: 0px;font-family: Times New Roman;">DIVISIÓN PERSONAL DOCENTE</h4>
+    <p style="font-family: Times New Roman; font-size: 15px; margin-top: 0px; padding-top: 0px; margin-bottom: 0px;  padding-left: 0px; padding-right: 0px; width: 250px; margin-left: -50px;"> S.__________ / __________D </p>
+    <br>
+    <div class="" style="font-family: sans-serif; font-size: 16px;">
         <p>
             Vienen a consideración de este Servicio Jurídico las presentes actuaciones mediante las cuales tramita la 
             designación de el/la Sr/Sra. <span id="apellido"></span> <span id="nombre"></span>
@@ -148,7 +155,7 @@
             Asesoría Letrada del Ministerio de Educación<br>            
         </p>
         <p>
-            San Juan, <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> de <span id="mes_actual"></span> de <span id="anio_actual3"></span>.
+            San Juan, <span id="dia_actual"></span> de <span id="mes_actual"></span> de <span id="anio_actual3"></span>.
         </p>
     </div>
     <div class="button-container" >
@@ -230,12 +237,14 @@
             const anio = fecha.getFullYear();
             const mes = String(fecha.getMonth() + 1).padStart(2, '0');
             const mesNombre = obtenerMes(mes);
+            const dia = fecha.getDate();
 
             // Llenar los campos del documento con mayúsculas
             document.getElementById('num_exp').textContent = datos.num_exp || '_____';
             document.getElementById('anio_actual').textContent = anio;
-            document.getElementById('anio_actual2').textContent = anio;
+            document.getElementById('anio_actual2').textContent = anio.toString().slice(-2);
             document.getElementById('anio_actual3').textContent = anio;
+            document.getElementById('dia_actual').textContent = dia;
             document.getElementById('num_dictamen').textContent = datos.num_dictamen || '_____';
             document.getElementById('apellido').textContent = convertirAMayusculas(datos.apellido);
             document.getElementById('apellido2').textContent = convertirAMayusculas(datos.apellido);
