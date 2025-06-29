@@ -8,6 +8,7 @@
     <style>
        @media print {
             @page {
+                size: legal;
                 margin: 0;
                 padding: 0px 30px 0px 30px;
                 }
@@ -28,7 +29,6 @@
             line-height: 1.3; /* Reduce el espacio vertical dentro del párrafo */
         }
         body {
-            font-family: 'Andalus', sans-serif;
             margin: 15px 20px 0px 20px;
             line-height: 1.5;
             padding: 0px 20px 0px 40px;
@@ -38,8 +38,10 @@
         .encabezado {
             text-align: right;
             font-size: 0.9em;
+            margin-top: 10px;
+            padding-top: 5px;
             margin-bottom: 20px;   
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'Times New Roman';
         }
         .content {
             text-align: justify;
@@ -104,23 +106,25 @@
 
 <body class="content">    
     <div class="encabezado">
-        <p><strong>Corresponde a Exp.</strong> N° 300-<span id="num_exp"></span>-<span id="anio_actual"></span>-EXP.</p>
-        <p><strong>Extracto:</strong> S/Designación en Hs.CÁTEDRA.</p>
-        <p style="margin-top: 10px; margin-right: 80px;font-size: 17px;"><strong>DICTAMEN N° <span id="num_dictamen"></span>/<span id="anio_actual2"></span></strong></p>
+        <p style="font-size: 15px;margin-bottom: 0px;padding-bottom: 0px;"><strong>Corresponde a Exp.</strong> N° 300-<span id="num_exp"></span>-<span id="anio_actual"></span>-EXP.</p>
+        <p style="font-size: 15px;margin-right: 15px;padding-top: 0px;margin-top: 0px;"><strong>Extracto:</strong> S/Designación en Hs.CÁTEDRA.</p>
+        <p style="margin-top: 3px; margin-right: 133px;font-size: 17px;"><strong>DICTAMEN N° <span id="num_dictamen"></span>/<span id="anio_actual2"></span></strong></p>
     </div>       
     <br>
     <br>
     <br>
-        
-    <div style="text-align: center;display: inline-block; margin-bottom: 0px;font-family: Cambria;font-size: 20px;" >
+    <br>
+    <div style="text-align: center;display: inline-block; margin-bottom: 0px;font-family: Cambria;font-size: 20px;padding-top: 9px;" >
         <strong>MINISTERIO DE EDUCACIÓN</strong>        
     </div>
     <br>
     <u style="font-family: Times New Roman; padding-left: 60px; ">SAN JUAN</u>
-    <h4 style="margin-top: 0px; padding-top: 0px; margin-bottom: 0px;font-family: Times New Roman;">DIVISIÓN PERSONAL DOCENTE</h4>
-    <p style="font-family: Times New Roman; font-size: 15px; margin-top: 0px; padding-top: 0px; margin-bottom: 0px;  padding-left: 0px; padding-right: 0px; width: 250px; margin-left: -50px;"> S.__________ / __________D </p>
     <br>
-    <div class="" style="font-family: sans-serif; font-size: 16px;">
+    <h4 style="margin-top: 15px; padding-top: 0px; margin-bottom: 0px;font-family: Times New Roman;">DIVISIÓN PERSONAL DOCENTE</h4>
+    
+    <p style="font-family: Times New Roman; font-size: 15px; margin-top: 15px; padding-top: 0px; margin-bottom: 0px;  padding-left: 0px; padding-right: 0px; width: 250px; margin-left: -50px;"> S.__________ / __________D </p>
+    <br>
+    <div class="" style="font-family: serif; font-size: 16px;">
         <p>
             Vienen a consideración de este Servicio Jurídico las presentes actuaciones mediante las cuales tramita la 
             designación de el/la Sr/Sra. <span id="apellido"></span> <span id="nombre"></span>
@@ -159,7 +163,7 @@
         </p>
     </div>
     <div class="button-container" >
-        <button onclick="window.print()">Imprimir Documento</button>
+        <button onclick="guardarDocumento()">Imprimir Documento</button>
         <div class="enlaces">
             <a style="background-color:rgb(100, 106, 100);" href="index.html">Atrás</a>
             <a style="background-color:#ffc107; color:#000;" href="hs_catedra_crea.html">Editar</a>
@@ -264,6 +268,28 @@
         // Función para guardar datos en localStorage (se puede llamar desde el formulario de creación)
         function guardarDatosProfesor(datos) {
             localStorage.setItem('datosProfesor', JSON.stringify(datos));
+        }
+
+        // Función para generar el nombre de archivo automático
+        function generarNombreArchivo() {
+            const datos = obtenerDatosProfesor();
+            const fecha = new Date();
+            const anio = fecha.getFullYear();
+            const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+            const dia = fecha.getDate().toString().padStart(2, '0');
+            const dni = datos.dni || 'SIN_DNI';
+            return `hs_catedra_${dni}_${dia}_${mes}_${anio}`;
+        }
+
+        // Función para guardar el documento como PDF
+        function guardarDocumento() {
+            const nombreArchivo = generarNombreArchivo();
+            
+            // Configurar el título del documento actual
+            document.title = nombreArchivo;
+            
+            // Imprimir en la ventana actual
+            window.print();
         }
     </script>
 </body>
